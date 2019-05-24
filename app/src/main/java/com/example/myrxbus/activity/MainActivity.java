@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import io.reactivex.functions.Consumer;
 
 public class MainActivity extends BaseActivity {
     private Handler handler = new Handler();
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,8 @@ public class MainActivity extends BaseActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void accept(RxMessage1 rxMessage) {
+                Log.e(TAG, "accept" + rxMessage.getMsg());
+
                 textView.setText("RxMessage1：" + rxMessage.getMsg());
             }
         }, new Consumer<Throwable>() {

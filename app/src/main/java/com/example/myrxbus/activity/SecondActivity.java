@@ -3,7 +3,7 @@ package com.example.myrxbus.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,6 +16,7 @@ import io.reactivex.functions.Consumer;
 
 
 public class SecondActivity extends BaseActivity {
+    private static final String TAG = SecondActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,8 @@ public class SecondActivity extends BaseActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void accept(RxMessage2 rxMessage) {
+                Log.e(TAG, "accept" + rxMessage.getMsg());
+
                 textView.setText("RxMessage2：" + rxMessage.getMsg());
             }
         }, new Consumer<Throwable>() {
