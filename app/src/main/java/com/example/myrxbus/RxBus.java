@@ -3,8 +3,8 @@ package com.example.myrxbus;
 import com.jakewharton.rxrelay2.Relay;
 import com.jakewharton.rxrelay2.ReplayRelay;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
@@ -20,10 +20,11 @@ public class RxBus {
     //ReplayRelay：支持粘性事件，可接收全部消息
     private final Relay<Object> bus;
     //避免内存泄漏
-    private Map<String, CompositeDisposable> disposableMap = new HashMap<>();
+    private Map<String, CompositeDisposable> disposableMap;
 
     private RxBus() {
         bus = ReplayRelay.create().toSerialized();
+        disposableMap = new ConcurrentHashMap<>();
     }
 
     public static RxBus getRxBus() {

@@ -1,7 +1,7 @@
 package com.example.myrxbus;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
@@ -19,10 +19,11 @@ public class RxSubjectBus {
     //ReplayRelay：支持粘性事件，可接收全部消息
     private final Subject<Object> bus;
     //避免内存泄漏
-    private Map<String, CompositeDisposable> disposableMap = new HashMap<>();
+    private Map<String, CompositeDisposable> disposableMap;
 
     private RxSubjectBus() {
         bus = PublishSubject.create().toSerialized();
+        disposableMap = new ConcurrentHashMap<>();
     }
 
     public static RxSubjectBus getRxBus() {
